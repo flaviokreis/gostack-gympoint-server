@@ -1,5 +1,8 @@
 import Sequelize, { Model } from 'sequelize';
 
+import Plan from './Plan';
+import Student from './Student';
+
 class Registration extends Model {
   static init(sequelize) {
     super.init(
@@ -12,6 +15,14 @@ class Registration extends Model {
       },
       { sequelize }
     );
+  }
+
+  static associate() {
+    Registration.belongsTo(Student, {
+      foreignKey: 'student_id',
+      as: 'student'
+    });
+    Registration.belongsTo(Plan, { foreignKey: 'plan_id', as: 'plan' });
   }
 }
 

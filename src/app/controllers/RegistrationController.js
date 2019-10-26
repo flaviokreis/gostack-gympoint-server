@@ -6,6 +6,32 @@ import Plan from '../models/Plan';
 import Registration from '../models/Registration';
 
 class RegistrationController {
+  async index(req, res) {
+    const { page = 1 } = req.params;
+
+    const registrations = await Registration.findAll({
+      limit: 20,
+      offset: (page - 1) * 20,
+      attributes: ['id', 'start_date', 'end_date', 'price'],
+      include: [
+        {
+          model: Plan,
+          foreignKey: 'plan_id',
+          as: 'plan',
+          attributes: ['id', 'title', 'duration', 'price']
+        },
+        {
+          model: Student,
+          foreignKey: 'student_id',
+          as: 'student',
+          attributes: ['id', 'name']
+        }
+      ]
+    });
+
+    return res.json(registrations);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       student_id: Yup.number()
