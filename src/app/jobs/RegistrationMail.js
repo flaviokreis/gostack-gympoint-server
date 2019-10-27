@@ -3,7 +3,7 @@ import pt from 'date-fns/locale/pt';
 
 import Mail from '../../lib/Mail';
 
-class CancellationMail {
+class RegistrationMail {
   get key() {
     return 'RegistrationMail';
   }
@@ -39,4 +39,4 @@ class CancellationMail {
   }
 }
 
-export default new CancellationMail();
+export default new RegistrationMail();
